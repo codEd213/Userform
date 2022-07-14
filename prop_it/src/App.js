@@ -17,7 +17,7 @@ function App() {
     hairColor: "brown",
   };
   const person4 = {
-    firstName: "JaVanne",
+    firstName: "JaVannee",
     lastName: "Doe",
     age: 32,
     hairColor: "red",
