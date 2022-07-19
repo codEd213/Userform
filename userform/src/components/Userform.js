@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 
 const UserForm = (props) => {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPass, setconfirmPass] = useState("");
   const createUser = (e) => {
     // we must prevent the default refresh of the browser to keep our state from being reset
     e.preventDefault();
 
     // create a javascript object to hold all of the values
     const newUser = {
-      username: username,
+      firstName: firstName,
+      lastName: lastName,
       email: email,
       password: password,
+      confirmPass: confirmPass,
     };
     console.log("Welcome", newUser);
   };
@@ -31,16 +35,34 @@ const UserForm = (props) => {
     margin: "auto",
   };
 
+  const formMessage = () => {
+    if (lastName.length < 2 && lastName.length > 0) {
+      return "Last name must be at least 2 characters";
+    }
+  };
+
   return (
     <div>
       <form onSubmit={createUser} style={{ marginTop: "20px" }}>
         <div style={inputDataDivStyle}>
-          <label htmlFor="username">Username: </label>
+          <label htmlFor="firstName">First Name: </label>
           <input
             type="text"
-            name="username"
-            onChange={(e) => setUsername(e.target.value)}
+            name="firstName"
+            onChange={(e) => setFirstName(e.target.value)}
           />
+          {firstName.length < 2 && firstName.length > 0 ? (
+            <p>First Name must be at least 2 characters</p>
+          ) : null}
+        </div>
+        <div style={inputDataDivStyle}>
+          <label htmlFor="lastName">Last Name: </label>
+          <input
+            type="text"
+            name="lastName"
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <p>{formMessage()}</p>
         </div>
         <div style={inputDataDivStyle}>
           <label htmlFor="email">Email Address: </label>
@@ -49,6 +71,9 @@ const UserForm = (props) => {
             name="email"
             onChange={(e) => setEmail(e.target.value)}
           />
+          {email.length < 2 && email.length > 0 ? (
+            <p>Email must be at least 2 characters</p>
+          ) : null}
         </div>
         <div style={inputDataDivStyle}>
           <label htmlFor="password">Password: </label>
@@ -57,14 +82,21 @@ const UserForm = (props) => {
             name="password"
             onChange={(e) => setPassword(e.target.value)}
           />
+          {password.length < 8 && password.length > 0 ? (
+            <p>Password must be at least 8 characters</p>
+          ) : null}
         </div>
+        <div style={inputDataDivStyle}>
+          <label htmlFor="confirmPass">Confirm Password: </label>
+          <input
+            type="confirmPass"
+            name="confirmPass"
+            onChange={(e) => setconfirmPass(e.target.value)}
+          />
+          {password !== confirmPass ? <p>Passwords must match</p> : null}
+        </div>
+        <input type="submit" value="Submit Form" />
       </form>
-      <div style={formDataDivStyle}>
-        <h3>Your Form: </h3>
-        <p>Username: {username}</p>
-        <p>Email Address: {email}</p>
-        <p>Password: {password}</p>
-      </div>
     </div>
   );
 };
